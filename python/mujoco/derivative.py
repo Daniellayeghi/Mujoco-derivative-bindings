@@ -5,8 +5,8 @@ Mode = _derivative.Mode
 
 
 class MjDerivativeParams(_derivative.MjDerivativeParams):
-    def __init__(self, eps, wrt):
-        _derivative.MjDerivativeParams.__init__(self, eps, wrt)
+    def __init__(self, eps, wrt, mode):
+        _derivative.MjDerivativeParams.__init__(self, eps, wrt, mode)
 
 
 class MjDerivative(_derivative.MjDerivative):

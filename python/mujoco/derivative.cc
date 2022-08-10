@@ -24,7 +24,7 @@ namespace {
 
 
     enum class Wrt : int {
-        Pos = 0, Vel = 1, Acc = 2, Ctrl = 3
+        Pos = 0, Vel = 1, Acc = 2, State = 3, Ctrl = 4
     };
 
     enum class Mode : int {
@@ -84,10 +84,9 @@ namespace {
             m_func = select_mode(m_params.m_mode_id);
             m_sens_res = Eigen::MatrixXd(m_m->nsensordata, m_wrt.size());
             if (m_params.m_mode_id == Mode::Fwd)
-                m_func_res = Eigen::MatrixXd(m_m->nq + m_m->nv * 2, m_wrt.size());
+                m_func_res = Eigen::MatrixXd(m_m->nq + m_m->nv, m_wrt.size());
             else
                 m_func_res = Eigen::MatrixXd(m_m->nv, m_wrt.size());
-
         };
 
 
@@ -120,7 +119,6 @@ namespace {
                 m_func(m_m, m_ed.m_d);
                 m_func_res.block(0, i, m_m->nq, 1) = (m_ed.m_pos - ed.m_pos) / m_params.m_eps;
                 m_func_res.block(m_m->nq, i, m_m->nv, 1) = (m_ed.m_vel - ed.m_vel) / m_params.m_eps;
-                m_func_res.block(m_m->nq + m_m->nv, i, m_m->nv, 1) = (m_ed.m_acc - ed.m_acc) / m_params.m_eps;
                 copy_data(m_m, ed.m_d, m_ed.m_d);
                 mj_forward(m_m, m_ed.m_d);
             }
