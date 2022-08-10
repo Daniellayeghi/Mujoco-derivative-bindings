@@ -9,6 +9,8 @@
   </a>
 </p>
 
+**This fork contains mujoco bindings with derivatives (using finite differences).**
+
 **MuJoCo** stands for **Mu**lti-**Jo**int dynamics with **Co**ntact. It is a
 general purpose physics engine that aims to facilitate research and development
 in robotics, biomechanics, graphics and animation, machine learning, and other

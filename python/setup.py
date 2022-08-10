@@ -293,6 +293,7 @@ setup(
         CMakeExtension('mujoco._functions'),
         CMakeExtension('mujoco._render'),
         CMakeExtension('mujoco._rollout'),
+        CMakeExtension('mujoco._derivative'),
         CMakeExtension('mujoco._structs'),
     ],
     python_requires='>=3.7',

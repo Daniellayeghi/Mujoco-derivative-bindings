@@ -61,7 +61,7 @@ include(MujocoHarden)
 add_compile_options("${MUJOCO_HARDEN_COMPILE_OPTIONS}")
 add_link_options("${MUJOCO_HARDEN_LINK_OPTIONS}")
 
-find_package(Python3 COMPONENTS Interpreter Development)
+set(PYBIND11_PYTHON_VERSION 3.7 CACHE STRING "")
 
 include(FindOrFetch)
 
@@ -332,6 +332,10 @@ target_link_libraries(
           mujoco
           raw
 )
+
+mujoco_pybind11_module(_derivative derivative.cc)
+target_link_libraries(_derivative PRIVATE functions_header mujoco raw)
+
 if(APPLE)
   # C++17 aligned allocation is not available until macOS 10.14.
   target_compile_options(_functions PRIVATE -fno-aligned-allocation)
@@ -376,6 +380,7 @@ set(LIBRARIES_FOR_WHEEL
     "$<TARGET_FILE:_enums>"
     "$<TARGET_FILE:_errors>"
     "$<TARGET_FILE:_functions>"
+    "$<TARGET_FILE:_derivative>"
     "$<TARGET_FILE:_render>"
     "$<TARGET_FILE:_rollout>"
     "$<TARGET_FILE:_structs>"
@@ -403,6 +408,7 @@ if(MUJOCO_PYTHON_MAKE_WHEEL)
     _enums
     _errors
     _functions
+    _derivative
     _render
     _rollout
     _structs

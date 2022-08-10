@@ -47,6 +47,9 @@ if(APPLE AND MUJOCO_BUILD_EXAMPLES)
   enable_language(OBJCXX)
 endif()
 
+find_package(Python3 3.7 EXACT REQUIRED COMPONENTS Interpreter)
+find_package(Python3 3.7 EXACT REQUIRED COMPONENTS Development)
+
 include(MujocoOptions)
 include(MujocoMacOS)
 include(MujocoDependencies)

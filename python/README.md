@@ -1,14 +1,14 @@
-# MuJoCo Python Bindings
-
-<!-- [![PyPI Python Version][pypi-versions-badge]][pypi] -->
+# MuJoCo Python Bindings 
+### *With derivatives*
+[![PyPI Python Version][pypi-versions-badge]][pypi]
 [![PyPI version][pypi-badge]][pypi]
 
 [pypi-versions-badge]: https://img.shields.io/pypi/pyversions/mujoco
 [pypi-badge]: https://badge.fury.io/py/mujoco.svg
 [pypi]: https://pypi.org/project/mujoco/
 
-This package is the canonical Python bindings for the
-[MuJoCo physics engine](https://github.com/deepmind/mujoco).
+This fork is the canonical Python bindings for the
+[MuJoCo physics engine](https://github.com/deepmind/mujoco) + derivatives computations using finite differences.
 These bindings are developed and maintained by DeepMind, and is kept up-to-date
 with the latest developments in MuJoCo itself.
 
@@ -45,11 +45,11 @@ PyPI.
 
 1. Make sure you have CMake and a C++17 compiler installed.
 
-1. Download the [latest binary release](https://github.com/deepmind/mujoco/releases)
+2. Download the [latest binary release](https://github.com/deepmind/mujoco/releases)
    from GitHub. On macOS, the download corresponds to a DMG file from which you
    can drag `MuJoCo.app` into your `/Applications` folder.
 
-1. Clone the entire `mujoco` repository from GitHub and `cd` into the python
+3. Clone the entire `mujoco` repository from GitHub and `cd` into the python
    directory.
 
    ```bash
@@ -57,14 +57,14 @@ PyPI.
    cd mujoco/python
    ```
 
-1. Create a virtual environment:
+4. Create a virtual environment:
 
    ```bash
    python3 -m venv /tmp/mujoco
    source /tmp/mujoco/bin/activate
    ```
 
-1. Generate a [source distribution](https://packaging.python.org/en/latest/glossary/#term-Source-Distribution-or-sdist)
+5. Generate a [source distribution](https://packaging.python.org/en/latest/glossary/#term-Source-Distribution-or-sdist)
    tarball with the `make_sdist.sh` script.
 
    ```bash
@@ -78,7 +78,7 @@ PyPI.
    completion, the script will create a `dist` directory with a
    `mujoco-x.y.z.tar.gz` file (where `x.y.z` is the version number).
 
-1. Use the generated source distribution to build and install the bindings.
+6. Use the generated source distribution to build and install the bindings.
    You'll need to specify the path to the MuJoCo library you downloaded earlier
    in the `MUJOCO_PATH` environment variable.
 
@@ -91,6 +91,13 @@ PyPI.
    cd dist
    MUJOCO_PATH=/PATH/TO/MUJOCO pip install mujoco-x.y.z.tar.gz
    ```
+
+7. To use the generated binding in any virtual environment copy the mujoco directory to the site-packages of your 
+virtual environment
+   ```bash
+   cp -r /tmp/mujoco/lib/python3.7/site-packages/mujoco/ /path_to_env/lib/python3.7/site-packages/
+   ```
+   **As these bindings are standalone you should not install mujoco from PYPI after the step above (This will result in conflicts).**
 
 The Python bindings should now be installed! To check that they've been
 successfully installed, `cd` outside of the `mujoco` directory and run
