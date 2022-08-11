@@ -10,8 +10,8 @@ class MjDerivativeParams(_derivative.MjDerivativeParams):
 
 
 class MjDerivative(_derivative.MjDerivative):
-    def __init__(self, model, params):
-        _derivative.MjDerivative.__init__(self, model, params)
+    def __init__(self, model, data, params):
+        _derivative.MjDerivative.__init__(self, model, data, params)
 
 
 class MjDataVecView(_derivative.MjDataVecView):
