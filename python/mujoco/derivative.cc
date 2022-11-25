@@ -105,11 +105,16 @@ namespace {
                 for (int i = 0; i < wrt.size(); ++i) {
                     perturb(i, wrt);
                     m_func(m_m, m_ed_internal.m_d);
-                    m_func_res.block(0, col + i, m_m->nv, 1) = (m_ed_internal.m_qfrc_inverse - m_ed_external.m_qfrc_inverse) / m_params.m_eps;
+                    m_func_res.block(0, col + i, m_m->nv, 1) = m_ed_internal.m_qfrc_inverse;
                     copy_data(m_m, m_ed_external.m_d, m_ed_internal.m_d);
+
+                    m_func(m_m, m_ed_internal.m_d);
+                    m_func_res.block(0, col + i, m_m->nv, 1) -= m_ed_internal.m_qfrc_inverse;
+                    m_func_res.block(0, col + i, m_m->nv, 1) /= m_params.m_eps;
                 }
                 col += wrt.size();
             }
+
             return m_func_res;
         };
 
@@ -123,12 +128,20 @@ namespace {
                 for (int i = 0; i < wrt.size(); ++i) {
                     perturb(i, wrt);
                     m_func(m_m, m_ed_internal.m_d);
-                    m_func_res.block(0, col + i, m_m->nq, 1) = (m_ed_internal.m_pos - m_ed_external.m_pos) / m_params.m_eps;
-                    m_func_res.block(m_m->nq, col + i, m_m->nv, 1) = (m_ed_internal.m_vel - m_ed_external.m_vel) / m_params.m_eps;
+                    m_func_res.block(0, col + i, m_m->nq, 1) = m_ed_internal.m_pos;
+                    m_func_res.block(m_m->nq, col + i, m_m->nv, 1) = m_ed_internal.m_vel;
                     copy_data(m_m, m_ed_external.m_d, m_ed_internal.m_d);
+
+                    // f(u + e) - f(u) / eps
+                    m_func(m_m, m_ed_internal.m_d);
+                    m_func_res.block(0, col + i, m_m->nq, 1) -= m_ed_internal.m_pos;
+                    m_func_res.block(m_m->nq, col + i, m_m->nv, 1) -= m_ed_internal.m_vel;
+                    m_func_res.block(0, col + i, m_m->nq, 1) /= m_params.m_eps;
+                    m_func_res.block(m_m->nq, col + i, m_m->nv, 1) /= m_params.m_eps;
                 }
                 col += wrt.size();
             }
+
             return m_func_res;
         };
 
@@ -150,8 +163,12 @@ namespace {
                 for (int i = 0; i < wrt.size(); ++i) {
                     perturb(i, wrt);
                     m_func(m_m, m_ed_internal.m_d);
-                    m_sens_res.col(i + col) = (m_ed_internal.m_sens - m_ed_external.m_sens) / m_params.m_eps;
+                    m_sens_res.col(i + col) = m_ed_internal.m_sens;
                     copy_data(m_m, m_ed_external.m_d, m_ed_internal.m_d);
+
+                    m_func(m_m, m_ed_internal.m_d);
+                    m_sens_res.col(i + col) -= m_ed_internal.m_sens;
+                    m_sens_res.col(i + col) /= m_params.m_eps;
                 }
                 col += wrt.size();
             }

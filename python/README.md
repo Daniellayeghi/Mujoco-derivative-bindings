@@ -60,7 +60,7 @@ PyPI.
 4. Create a virtual environment:
 
    ```bash
-   python3 -m venv /tmp/mujoco
+   python3.7 -m venv /tmp/mujoco
    source /tmp/mujoco/bin/activate
    ```
 

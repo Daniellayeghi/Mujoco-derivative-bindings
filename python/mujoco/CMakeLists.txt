@@ -46,6 +46,9 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Cl
   add_compile_options(-fdata-sections -ffunction-sections)
 endif()
 
+find_package(Python3 3.7 EXACT REQUIRED COMPONENTS Interpreter)
+find_package(Python3 3.7 EXACT REQUIRED COMPONENTS Development)
+
 include(MujocoLinkOptions)
 get_mujoco_extra_link_options(EXTRA_LINK_OPTIONS)
 add_link_options(${EXTRA_LINK_OPTIONS})
